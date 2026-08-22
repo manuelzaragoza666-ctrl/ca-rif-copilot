@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ca-rif-copilot"
+version = "1.0.0"
+description = "Planning support for a reduction in force under California law"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = ["pandas>=2.0", "numpy>=1.24", "PyYAML>=6.0"]
+
+[project.scripts]
+rif-copilot = "rif_copilot.pipeline:main"
+
+[tool.setuptools]
+packages = ["rif_copilot"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

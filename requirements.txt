@@ -1,0 +1,13 @@
+# California RIF Copilot — runtime dependencies
+#
+# Deliberately minimal. Fisher's exact test is implemented directly with
+# math.lgamma rather than SciPy, so the statistics layer has no compiled
+# dependency and the system installs cleanly on ARM (including Raspberry Pi).
+
+pandas>=2.0
+numpy>=1.24
+PyYAML>=6.0
+
+# Optional: only needed to run the test suites with pytest. Every test file
+# also runs standalone (python test_*.py) via a built-in shim.
+# pytest>=7.0
