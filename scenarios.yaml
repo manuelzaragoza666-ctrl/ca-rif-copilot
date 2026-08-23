@@ -1,0 +1,131 @@
+# ---------------------------------------------------------------------------
+# Scenario set — Scenario Simulator (box 2)
+#
+# Every scenario needs a written business rationale. Record it when you create
+# the scenario, not after you see the results: the sequence of scenarios you
+# modeled is discoverable, and a rationale reconstructed afterward is worth
+# very little.
+#
+# `base` supplies the shared plan; each scenario deep-merges its overrides.
+# ---------------------------------------------------------------------------
+
+base:
+  as_of_date: 2026-10-30
+  burden_multiplier: 1.25
+  manual_review_below: 10
+  min_comparison_group_size: 3
+  default:
+    mode: individual
+    comparison_group: [department, job_level]
+    criteria:
+      performance:
+        kind: performance
+        source_column: performance_rating
+        weight: 0.6
+      critical_skills:
+        kind: skills
+        source_column: skills
+        weight: 0.4
+        required: false
+        critical_items: [SQL, Excel]
+  departments:
+    Engineering:
+      mode: individual
+      comparison_group: [department, job_level]
+      criteria:
+        performance:
+          kind: performance
+          source_column: performance_rating
+          weight: 0.5
+        critical_skills:
+          kind: skills
+          source_column: skills
+          weight: 0.5
+          critical_items: [Python, Kubernetes, Distributed Systems]
+    Operations:
+      mode: individual
+      comparison_group: [department, job_level]
+      criteria:
+        performance:
+          kind: performance
+          source_column: performance_rating
+          weight: 0.5
+        critical_skills:
+          kind: skills
+          source_column: skills
+          weight: 0.5
+          critical_items: [Forklift Operation, Inventory Systems]
+      protected_positions: [Warehouse Associate]
+    Finance:
+      mode: individual
+      comparison_group: [department, job_level]
+      max_savings_share: 0.15
+      criteria:
+        performance:
+          kind: performance
+          source_column: performance_rating
+          weight: 0.5
+        critical_skills:
+          kind: skills
+          source_column: skills
+          weight: 0.5
+          critical_items: [Financial Modeling, SQL]
+
+scenarios:
+
+  - name: "A — Broad reduction"
+    rationale: >
+      Board-approved $2.5M annualized run-rate reduction, spread across all
+      functions in proportion to current cost. No function is being exited;
+      the goal is a uniform efficiency improvement while preserving every
+      capability.
+    plan:
+      cost_savings_target: 2500000
+
+  - name: "B — Exit brand function"
+    rationale: >
+      Brand and campaign work is moving to an outside agency under a contract
+      signed in Q3, which removes the need for the in-house Marketing
+      Associate role entirely. Remaining savings come from the same broad
+      criteria as Scenario A. Modeled to test whether the agency transition
+      reduces the depth of cuts needed elsewhere.
+    notes: >
+      Position elimination here is driven by the agency contract, not by
+      individual performance.
+    plan:
+      cost_savings_target: 2500000
+      departments:
+        Marketing:
+          mode: position
+          eliminate_positions: [Marketing Associate]
+
+  - name: "C — Smaller reduction"
+    rationale: >
+      Downside case requested by the CFO: if Q4 bookings land at plan rather
+      than the conservative forecast, the required reduction falls to $1.5M.
+      Same criteria as Scenario A, lower target, to size the difference in
+      operational disruption.
+    plan:
+      cost_savings_target: 1500000
+
+  - name: "D — Skills-weighted"
+    rationale: >
+      The platform migration runs through FY27 and depends on a small number of
+      infrastructure specialists. This variant weights demonstrated critical
+      skills above performance rating in Engineering to test whether the
+      migration can still be staffed at the same savings target. Weighting was
+      set from the migration staffing plan dated 2026-07-14.
+    plan:
+      cost_savings_target: 2500000
+      departments:
+        Engineering:
+          criteria:
+            performance:
+              kind: performance
+              source_column: performance_rating
+              weight: 0.2
+            critical_skills:
+              kind: skills
+              source_column: skills
+              weight: 0.8
+              critical_items: [Python, Kubernetes, Distributed Systems]
