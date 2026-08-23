@@ -1,11 +1,4 @@
-# California RIF Copilot
 
-A modular Python system for planning a reduction in force under California law:
-data ingestion, selection scoring, adverse impact testing, scenario comparison,
-compliance determination, severance calculation, document drafting, structured
-approvals, and execution tracking.
-
-All ten boxes are built. **438 unit tests, 64 end-to-end pipeline checks.**
 
 ---
 
