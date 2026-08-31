@@ -17,4 +17,5 @@ rif-copilot = "rif_copilot.pipeline:main"
 packages = ["rif_copilot"]
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+# Remove or comment out the testpaths line to allow pytest to discover tests in the root
+# testpaths = ["tests"]
