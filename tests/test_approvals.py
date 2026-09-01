@@ -525,6 +525,6 @@ if __name__ == "__main__":
             failed += 1
             print(f"FAIL  {name}")
             traceback.print_exc()
-    print(f"\n{len(tests) - failed}/{lenibrary(tests)} passed" if False
+  print(f"\n{len(tests) - failed}/{len(tests)} passed" if False
           else f"\n{len(tests) - failed}/{len(tests)} passed")
     sys.exit(1 if failed else 0)
